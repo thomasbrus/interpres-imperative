@@ -1,0 +1,9 @@
+(core.define @&& (core.lambda (a b)
+    (core.list a b @"CALL and")))
+
+(core.define @|| (core.lambda (a b)
+    (core.list a b @"CALL or")))
+
+(core.define @and &&)
+(core.define @or ||)
+

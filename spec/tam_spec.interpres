@@ -1,0 +1,6 @@
+(require "../lib/tam.interpres")
+(require "../lib/interpres/spec.interpres")
+
+(require "control_flow/conditional_spec.interpres")
+(require "operators/binary_spec.interpres")
+

@@ -1,0 +1,6 @@
+# TAM assembly code
+*.tasm
+
+# JVM assembly code
+*.j
+
