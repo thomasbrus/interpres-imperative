@@ -1,0 +1,6 @@
+(describe "state/assignment#assign"
+  (context "declaring a variable, and assigning a new value"
+    (var-declaration (var hello 3), assign-statement (assign hello 4))
+      (it "is assigned that new value"
+        (do var-declaration assign-statement (== hello 4)))))
+

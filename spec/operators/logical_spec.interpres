@@ -1,0 +1,18 @@
+(describe "operators/logical#&&"
+  (do (context "evaluating (true && true)"
+        (boolean (&& true true))
+        (it "equals true" (== true boolean)))
+
+      (context "evaluating (true && false)"
+        (boolean (&& true false))
+        (it "equals false" (== false boolean)))))
+
+(describe "operators/logical#||"
+  (do (context "evaluating (true || false)"
+        (boolean (|| true false))
+        (it "equals true" (== true boolean)))
+
+      (context "evaluating (false || false)"
+        (boolean (|| false false))
+        (it "equals false" (== false boolean)))))
+

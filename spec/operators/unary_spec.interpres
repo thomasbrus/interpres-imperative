@@ -1,0 +1,19 @@
+(describe "operators/unary#minus"
+  (do (context "negating the number 8"
+        (integer (minus 8))
+        (it "equals -8" (== -8 integer)))
+
+      (context "negating the number -4"
+        (integer (minus -4))
+        (it "equals 4" (== 4 integer)))))
+
+(describe "operators/unary#plus"
+  (context "using the plus sign on any number"
+    (integer (plus 7))
+    (it "returns itself" (== 7 integer))))
+
+(describe "operators/unary#!"
+  (context "negating a boolean value"
+    (boolean (! false))
+    (it "returns the opposite" (== true boolean))))
+

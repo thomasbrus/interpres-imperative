@@ -1,0 +1,5 @@
+(describe "state/constants#const"
+  (context "declaring a constant and its value"
+    (const-declaration (var hello 9))
+    (it "is assigned that value" (do const-declaration (== hello 9)))))
+

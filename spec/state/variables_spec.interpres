@@ -1,0 +1,9 @@
+(describe "state/variables#var"
+  (do (context "declaring a variable"
+        (var-declaration (var hello))
+        (it "is initialized to zero" (do var-declaration (== hello 0))))
+
+      (context "declaring a variable with an initial value"
+        (var-declaration (var hello-again 5))
+        (it "is assigned that value" (do var-declaration (== hello-again 5))))))
+

@@ -1,5 +1,25 @@
 (describe "operators/binary#+"
-  (context "when adding 3 to 4"
+  (context "adding 3 to 4"
     (sum (+ 3 4))
     (it "equals 7" (== 7 sum))))
+
+(describe "operators/binary#-"
+  (context "subtracting 3 from 8"
+    (difference (- 8 3))
+    (it "equals 5" (== 5 difference))))
+
+(describe "operators/binary#*"
+  (context "multiplying 2 with 6"
+    (product (* 2 6))
+    (it "equals 12" (== 12 product))))
+
+(describe "operators/binary#/"
+  (context "dividing 10 by 3"
+    (dividend (/ 10 3))
+    (it "equals 3" (== 3 dividend))))
+
+(describe "operators/binary#*"
+  (context "calculating 10 % 3"
+    (remainder (% 11 3))
+    (it "equals 2" (== 2 remainder))))
 

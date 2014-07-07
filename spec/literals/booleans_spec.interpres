@@ -1,0 +1,10 @@
+(describe "literals/boolean#true"
+  (context "evaluating true"
+    (true-value true)
+    (it "equals one" (== 1 true-value))))
+
+(describe "literals/boolean#false"
+  (context "evaluating false"
+    (false-value false)
+    (it "equals zero" (== 0 false-value))))
+

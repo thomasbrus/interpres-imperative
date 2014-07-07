@@ -1,0 +1,70 @@
+(describe "operators/relational#<="
+  (do (context "comparing 4 to 8"
+        (boolean (<= 4 8))
+        (it "is smaller or equal" (== true boolean)))
+
+      (context "comparing 7 to 7"
+        (boolean (<= 7 7))
+        (it "is smaller or equal" (== true boolean)))
+
+      (context "comparing 9 to 2"
+        (boolean (<= 9 2))
+        (it "is not smaller or equal" (== false boolean)))))
+
+(describe "operators/relational#>="
+  (do (context "comparing 4 to 8"
+        (boolean (>= 4 8))
+        (it "is not greater or equal" (== false boolean)))
+
+      (context "comparing 7 to 7"
+        (boolean (>= 7 7))
+        (it "is greater or equal" (== true boolean)))
+
+      (context "comparing 9 to 2"
+        (boolean (>= 9 2))
+        (it "is greater or equal" (== true boolean)))))
+
+(describe "operators/relational#<"
+  (do (context "comparing 4 to 8"
+        (boolean (< 4 8))
+        (it "is smaller" (== true boolean)))
+
+      (context "comparing 7 to 7"
+        (boolean (< 7 7))
+        (it "is not smaller" (== false boolean)))
+
+      (context "comparing 9 to 2"
+        (boolean (< 9 2))
+        (it "is not smaller" (== false boolean)))))
+
+(describe "operators/relational#>"
+  (do (context "comparing 4 to 8"
+        (boolean (> 4 8))
+        (it "is not greater" (== false boolean)))
+
+      (context "comparing 7 to 7"
+        (boolean (> 7 7))
+        (it "is not greater" (== false boolean)))
+
+      (context "comparing 9 to 2"
+        (boolean (> 9 2))
+        (it "is greater" (== true boolean)))))
+
+(describe "operators/relational#=="
+  (do (context "comparing 4 to 8"
+        (boolean (== 4 8))
+        (it "is not equal" (== false boolean)))
+
+      (context "comparing 9 to 9"
+        (boolean (== 9 9))
+        (it "is equal" (== true boolean)))))
+
+(describe "operators/relational#!="
+  (do (context "comparing 4 to 8"
+        (boolean (!= 4 8))
+        (it "is not equal" (== true boolean)))
+
+      (context "comparing 9 to 9"
+        (boolean (!= 9 9))
+        (it "is equal" (== false boolean)))))
+

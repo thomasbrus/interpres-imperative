@@ -1,0 +1,8 @@
+(describe "control_flow/loop#while"
+  (context "executing a simple while-loop with a counter"
+    ( counter-declaration (var counter)
+      while-expression (while (< counter 3) (do (assign counter (+ counter 1)))))
+
+      (it "halts after three loops"
+        (do counter-declaration while-expression (== 3 counter)))))
+

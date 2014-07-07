@@ -1,0 +1,6 @@
+(describe "control_flow/sequential#do"
+  (context "given a sequence of expressions"
+    (do-expression (do 1 2 3))
+    ; FIXME: Compare each of the three values on the stack
+    (it "evaluates each expression" (== do-expression 3))))
+
