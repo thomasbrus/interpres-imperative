@@ -1,6 +1,12 @@
 # TAM assembly code
 *.tasm
 
+# TAM bytecode
+*.tam
+
 # JVM assembly code
 *.j
+
+# JVM bytecode
+*.class
 
