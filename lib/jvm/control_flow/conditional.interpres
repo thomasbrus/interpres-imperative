@@ -1,4 +1,4 @@
-(core.define @if (core.lambda (predicate, consequent, (alternative @"nop"))
+(core.define @if (core.lambda (predicate, consequent, (alternative 0))
     (core.let @(false-label (asm.next-label), done-label (asm.next-label))
       (core.list
         predicate
