@@ -1,6 +1,7 @@
 (interpres/define @if (interpres/lambda (predicate, consequent, (alternative 0))
     (interpres/let @(false-label (asm/next-label), done-label (asm/next-label))
-      (interpres/list         predicate
+      (interpres/list
+        predicate
         (asm/jumpifeq false-label)
         consequent
         (asm/jump done-label)

@@ -1,15 +1,18 @@
 (interpres/define @read-int (interpres/lambda (@variable-symbol)
-  (interpres/list       @("getstatic Program/scanner Ljava/util/Scanner;"
+  (interpres/list
+      @("getstatic Program/scanner Ljava/util/Scanner;"
         "invokevirtual java/util/Scanner/nextInt()I")
     (asm/store ~(interpres/symbol/concat variable-symbol @: @address)))))
 
 (interpres/define @read-string (interpres/lambda (@variable-symbol)
-    (interpres/list       @("getstatic Program/scanner Ljava/util/Scanner;"
+    (interpres/list
+      @("getstatic Program/scanner Ljava/util/Scanner;"
         "invokevirtual java/util/Scanner/next()Ljava/lang/String;")
       (asm/store ~(interpres/symbol/concat variable-symbol @: @address)))))
 
 (interpres/define @read-chr (interpres/lambda (@variable-symbol)
-  (interpres/list       @("getstatic Program/scanner Ljava/util/Scanner;"
+  (interpres/list
+      @("getstatic Program/scanner Ljava/util/Scanner;"
         "invokevirtual java/util/Scanner/next()Ljava/lang/String;"
         "iconst_0"
         "invokevirtual java/lang/String/charAt(I)C")

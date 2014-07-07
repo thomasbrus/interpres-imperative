@@ -4,7 +4,8 @@
 
 (interpres/define @! (interpres/lambda (operand)
     (interpres/let @(true-label (asm/next-label), done-label (asm/next-label))
-      (interpres/list         operand
+      (interpres/list
+        operand
         (interpres/string/concat @"ifeq " true-label)
         false
         (asm/jump done-label)

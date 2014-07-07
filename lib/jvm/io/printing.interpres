@@ -1,32 +1,38 @@
 (interpres/define @print-int (interpres/lambda (integer)
-    (interpres/list       @("getstatic java/lang/System/out Ljava/io/PrintStream;")
+    (interpres/list
+      @("getstatic java/lang/System/out Ljava/io/PrintStream;")
       integer
       @("invokevirtual java/io/PrintStream/print(I)V"))))
 
 (interpres/define @print-chr (interpres/lambda (character)
-    (interpres/list       @("getstatic java/lang/System/out Ljava/io/PrintStream;")
+    (interpres/list
+      @("getstatic java/lang/System/out Ljava/io/PrintStream;")
       character
       @("invokevirtual java/io/PrintStream/print(C)V"))));
 
 (interpres/define @print-str (interpres/lambda (string)
-    (interpres/list       @("getstatic java/lang/System/out Ljava/io/PrintStream;")
+    (interpres/list
+      @("getstatic java/lang/System/out Ljava/io/PrintStream;")
       string
       @("invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V"))))
 
 (interpres/define @print-newline (interpres/lambda (string) (println-str "")))
 
 (interpres/define @println-int (interpres/lambda (integer)
-    (interpres/list       @("getstatic java/lang/System/out Ljava/io/PrintStream;")
+    (interpres/list
+      @("getstatic java/lang/System/out Ljava/io/PrintStream;")
       integer
       @("invokevirtual java/io/PrintStream/println(I)V"))))
 
 (interpres/define @println-chr (interpres/lambda (character)
-    (interpres/list       @("getstatic java/lang/System/out Ljava/io/PrintStream;")
+    (interpres/list
+      @("getstatic java/lang/System/out Ljava/io/PrintStream;")
       character
       @("invokevirtual java/io/PrintStream/println(C)V"))));
 
 (interpres/define @println-str (interpres/lambda (string)
-    (interpres/list       @("getstatic java/lang/System/out Ljava/io/PrintStream;")
+    (interpres/list
+      @("getstatic java/lang/System/out Ljava/io/PrintStream;")
       string
       @("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V"))))
 
