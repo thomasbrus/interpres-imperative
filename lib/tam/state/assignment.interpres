@@ -3,7 +3,7 @@
 
 ; TODO: Rename to assign-array-at
 (interpres/define @assign-nth (interpres/lambda (identifier index value)
-    (interpres/list/concat
+    (interpres/list
       value
       (+ (asm/loada (interpres/string/concat ~(interpres/symbol/concat identifier @: @address)))
          index)
