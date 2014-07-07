@@ -11,7 +11,7 @@
 
 ; TODO: Change var-name:index:address to var-name:address-index
 (interpres/define @assign-array (interpres/lambda (identifier input-array)
-    (interpres/let (index @0)
+    (interpres/let @(index @0)
         (interpres/list/map
           (interpres/lambda (entity)
             (interpres/list

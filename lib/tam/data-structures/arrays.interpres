@@ -4,7 +4,7 @@
     (interpres/list (interpres/string/concat @"LOADL " ~(interpres/symbol/concat identifier @: @size)))))
 
 ; TODO: Rename to array-at
-(interpres/define @nth (interpres/define (identifier index)
+(interpres/define @nth (interpres/lambda (identifier index)
     (interpres/list
       (+ (asm/loada (interpres/string/concat ~(interpres/symbol/concat identifier @: @address)))
          index)

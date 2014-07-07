@@ -7,7 +7,7 @@
 
 ; TODO: Add comments / explanation
 (interpres/define @var-array (interpres/lambda (identifier input-array)
-    (interpres/let (start-address (asm/address asm/stack/size @SB), index @0)
+    (interpres/let @(start-address (asm/address asm/stack/size @SB), index @0)
       (interpres/list
         (interpres/define identifier (asm/load start-address))
         (interpres/define (interpres/symbol/concat identifier @: @address) start-address)
@@ -16,7 +16,7 @@
 
         (interpres/list/map
           (interpres/lambda (entity)
-            (interpres/let (address (asm/address asm/stack/size @SB))
+            (interpres/let @(address (asm/address asm/stack/size @SB))
               (interpres/list
                 entity
 

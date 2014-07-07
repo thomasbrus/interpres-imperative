@@ -5,16 +5,15 @@
 (var-array @bools (array true false true true false true true false true true false false false true true true))
 
 (print-int (nth @ints 1))
-(print-char (nth @chars 1))
+(print-chr (nth @chars 1))
 
 (assign-nth @chars 1 'X')
 (assign-array @ints (core.list (- 6 2) 5 (+ 3 3)))
 
 (print-int (nth @ints 1))
-(print-char (nth @chars 1))
+(print-chr (nth @chars 1))
 
 (print-str "------")
 
 (var @i 0)
-(while (< i (array-size @ chars)) (do (if (nth @bools i) (print-char (nth @chars i))) (assign @i (+ i 1))))
-
+(while (< i (array-size @ chars)) (do (if (nth @bools i) (print-chr (nth @chars i))) (assign @i (+ i 1))))
