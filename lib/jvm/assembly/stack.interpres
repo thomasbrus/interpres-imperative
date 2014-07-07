@@ -1,5 +1,5 @@
-(core.define @asm.stack.size @0)
+(interpres/define @asm/stack/size @0)
 
-(core.define @asm.stack.increase (core.lambda ((amount @1))
-    (core.define @asm.stack.size (interpres/integer/add amount asm.stack.size))))
+(interpres/define @asm/stack/increase (interpres/lambda ((amount @1))
+    (interpres/define @asm/stack/size (interpres/integer/add amount asm/stack/size))))
 

@@ -1,11 +1,11 @@
-(core.define @asm.stack.size @0)
+(interpres/define @asm/stack/size @0)
 
-(core.define @asm.stack.increase (core.lambda ((amount @1))
-    (core.define @asm.stack.size (interpres/integer/add amount asm.stack.size))))
+(interpres/define @asm/stack/increase (interpres/lambda ((amount @1))
+    (interpres/define @asm/stack/size (interpres/integer/add amount asm/stack/size))))
 
-(core.define @asm.push (core.lambda (amount)
-    (core.list (interpres/string/concat @"PUSH " (core.integer-to-string amount)))))
+(interpres/define @asm/push (interpres/lambda (amount)
+    (interpres/list (interpres/string/concat @"PUSH " (interpres/integer-to-string amount)))))
 
-(core.define @asm.pop (core.lambda (amount)
-    (core.list (interpres/string/concat @"POP(0) " (core.integer-to-string amount)))))
+(interpres/define @asm/pop (interpres/lambda (amount)
+    (interpres/list (interpres/string/concat @"POP(0) " (interpres/integer-to-string amount)))))
 

@@ -1,9 +1,8 @@
-(core.define @while (core.lambda (condition, body)
-    (core.let @(reset-label (asm.next-label), done-label (asm.next-label))
-      (core.list
-        (asm.label reset-label)
+(interpres/define @while (interpres/lambda (condition, body)
+    (interpres/let @(reset-label (asm/next-label), done-label (asm/next-label))
+      (interpres/list         (asm/label reset-label)
         condition
-        (asm.jumpifeq done-label)
+        (asm/jumpifeq done-label)
         body
-        (asm.jump reset-label)
-        (asm.label done-label)))))
+        (asm/jump reset-label)
+        (asm/label done-label)))))

@@ -1,4 +1,4 @@
-(core.define @asm.header (core.lambda ()
+(interpres/define @asm/header (interpres/lambda ()
     @(".class public Program"
       ".super java/lang/Object"
       ".field public static scanner Ljava/util/Scanner;"
@@ -17,7 +17,7 @@
       "  putstatic Program/scanner Ljava/util/Scanner;"
       "  ; ----- main program -----")))
 
-(core.define @asm.footer (core.lambda ()
+(interpres/define @asm/footer (interpres/lambda ()
     @("  ; --- end main program ---"
       "  return"
       ".end method")))

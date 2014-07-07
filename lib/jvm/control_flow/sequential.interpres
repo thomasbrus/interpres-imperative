@@ -1,2 +1,1 @@
-(core.define @do core.list)
-
+(interpres/define @do interpres/list)

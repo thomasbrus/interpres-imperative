@@ -1,15 +1,15 @@
-(core.define @+ (core.lambda (left, right)
-    (core.list left right @("iadd"))))
+(interpres/define @+ (interpres/lambda (left, right)
+    (interpres/list left right @("iadd"))))
 
-(core.define @- (core.lambda (left, right)
-    (core.list left right @("isub"))))
+(interpres/define @- (interpres/lambda (left, right)
+    (interpres/list left right @("isub"))))
 
-(core.define @* (core.lambda (left, right)
-    (core.list left right @("imul"))))
+(interpres/define @* (interpres/lambda (left, right)
+    (interpres/list left right @("imul"))))
 
-(core.define @/ (core.lambda (left, right)
-    (core.list left right @("idiv"))))
+(interpres/define @/ (interpres/lambda (left, right)
+    (interpres/list left right @("idiv"))))
 
-(core.define @% (core.lambda (left, right)
-    (core.list left right @("irem"))))
+(interpres/define @% (interpres/lambda (left, right)
+    (interpres/list left right @("irem"))))
 

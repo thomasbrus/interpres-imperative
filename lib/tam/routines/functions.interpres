@@ -1,26 +1,21 @@
-(core.define @fn (core.lambda (@function-name, @first-argument-name, @second-argument-name, @body)
+(interpres/define @fn (interpres/lambda (@function-name, @first-argument-name, @second-argument-name, @body)
     ; Use unique label to refer to this function
-    (core.let @(function-label (asm.next-label))
+    (interpres/let @(function-label (asm/next-label))
 
       ; Define what happens when the function is invoked
-      (core.define function-name
-        ~(core.list
-          @core.lambda
-           (core.list first-argument-name second-argument-name)
-           (core.list
-             @core.list
+      (interpres/define function-name
+        ~(interpres/list           @core/lambda
+           (interpres/list first-argument-name second-argument-name)
+           (interpres/list              @core/list
              first-argument-name
              second-argument-name
-             (core.list @core.quote (asm.call function-label)))))
+             (interpres/list @core/quote (asm/call function-label)))))
 
       ; Place the function body on the stack
-      (core.list
-        (core.let
-          (core.list first-argument-name @@"LOAD(1) -2[LB]"
+      (interpres/list         (interpres/let           (interpres/list first-argument-name @@"LOAD(1) -2[LB]"
                      second-argument-name @@"LOAD(1) -1[LB]"
                      @evaluated-body body)
-          (core.list
-            (asm.jump (asm.address (interpres/integer/add @2 (interpres/list/size evaluated-body)) @CP))
-            (asm.label function-label) evaluated-body))
+          (interpres/list             (asm/jump (asm/address (interpres/integer/add @2 (interpres/list/size evaluated-body)) @CP))
+            (asm/label function-label) evaluated-body))
         @"RETURN(1) 2"))))
 

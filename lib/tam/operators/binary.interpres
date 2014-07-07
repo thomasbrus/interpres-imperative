@@ -1,15 +1,15 @@
-(core.define @+ (core.lambda (a b)
-    (core.list a b @"CALL add")))
+(interpres/define @+ (interpres/lambda (a b)
+    (interpres/list a b @"CALL add")))
 
-(core.define @- (core.lambda (a b)
-    (core.list a b @"CALL sub")))
+(interpres/define @- (interpres/lambda (a b)
+    (interpres/list a b @"CALL sub")))
 
-(core.define @* (core.lambda (a b)
-    (core.list a b @"CALL mult")))
+(interpres/define @* (interpres/lambda (a b)
+    (interpres/list a b @"CALL mult")))
 
-(core.define @/ (core.lambda (a b)
-    (core.list a b @"CALL div")))
+(interpres/define @/ (interpres/lambda (a b)
+    (interpres/list a b @"CALL div")))
 
-(core.define @% (core.lambda (a b)
-    (core.list a b @"CALL mod")))
+(interpres/define @% (interpres/lambda (a b)
+    (interpres/list a b @"CALL mod")))
 

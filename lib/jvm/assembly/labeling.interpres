@@ -1,11 +1,10 @@
 ; TODO Rename, so that more consistent
 
-(core.define @asm.labels.counter @0)
+(interpres/define @asm/labels/counter @0)
 
-(core.define @asm.label (core.lambda (label-name)
+(interpres/define @asm/label (interpres/lambda (label-name)
     (interpres/string/concat label-name @":")))
 
-(core.define @asm.next-label (core.lambda ()
-  (core.define @asm.labels.counter (interpres/integer/add @1 asm.labels.counter))
-  (interpres/string/concat @"label" (core.integer-to-string asm.labels.counter))))
-
+(interpres/define @asm/next-label (interpres/lambda ()
+  (interpres/define @asm/labels/counter (interpres/integer/add @1 asm/labels/counter))
+  (interpres/string/concat @"label" (interpres/integer-to-string asm/labels/counter))))

@@ -1,10 +1,9 @@
-(core.define @if (core.lambda (predicate, consequent, (alternative 0))
-    (core.let @(false-label (asm.next-label), done-label (asm.next-label))
-      (core.list
-        predicate
-        (asm.jumpifeq false-label)
+(interpres/define @if (interpres/lambda (predicate, consequent, (alternative 0))
+    (interpres/let @(false-label (asm/next-label), done-label (asm/next-label))
+      (interpres/list         predicate
+        (asm/jumpifeq false-label)
         consequent
-        (asm.jump done-label)
-        (asm.label false-label)
+        (asm/jump done-label)
+        (asm/label false-label)
         alternative
-        (asm.label done-label)))))
+        (asm/label done-label)))))

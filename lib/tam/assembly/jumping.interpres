@@ -1,6 +1,6 @@
-(core.define @asm.jump (core.lambda (address)
-    (core.list (interpres/string/concat @"JUMP " address))))
+(interpres/define @asm/jump (interpres/lambda (address)
+    (interpres/list (interpres/string/concat @"JUMP " address))))
 
-(core.define @asm.jumpif (core.lambda (truth-value address)
-    (core.list (interpres/string/concat         @"JUMPIF(" (core.integer-to-string truth-value) @") " address))))
+(interpres/define @asm/jumpif (interpres/lambda (truth-value address)
+    (interpres/list (interpres/string/concat         @"JUMPIF(" (interpres/integer-to-string truth-value) @") " address))))
 

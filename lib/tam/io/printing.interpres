@@ -1,20 +1,20 @@
-(core.define @print-int (core.lambda (integer)
-    (core.list integer @"CALL putint")))
+(interpres/define @print-int (interpres/lambda (integer)
+    (interpres/list integer @"CALL putint")))
 
-(core.define @print-chr (core.lambda (character)
-    (core.list character @"CALL put")))
+(interpres/define @print-chr (interpres/lambda (character)
+    (interpres/list character @"CALL put")))
 
-(core.define @print-str (core.lambda (string)
-    (core.list string (core.repeat (interpres/list/size string) @"CALL put"))))
+(interpres/define @print-str (interpres/lambda (string)
+    (interpres/list string (interpres/repeat (interpres/list/size string) @"CALL put"))))
 
-(core.define @print-newline (core.lambda () @"CALL puteol"))
+(interpres/define @print-newline (interpres/lambda () @"CALL puteol"))
 
-(core.define @println-int (core.lambda (integer)
-    (core.list (print-int integer) (print-newline))))
+(interpres/define @println-int (interpres/lambda (integer)
+    (interpres/list (print-int integer) (print-newline))))
 
-(core.define @println-chr (core.lambda (character)
-    (core.list (print-chr character) (print-newline))))
+(interpres/define @println-chr (interpres/lambda (character)
+    (interpres/list (print-chr character) (print-newline))))
 
-(core.define @println-str (core.lambda (string)
-    (core.list (print-str string) (print-newline))))
+(interpres/define @println-str (interpres/lambda (string)
+    (interpres/list (print-str string) (print-newline))))
 

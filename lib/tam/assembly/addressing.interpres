@@ -1,5 +1,4 @@
-(core.define @asm.address (core.lambda (offset register)
-    (core.string.concat
-        (core.integer-to-string offset)
-        @"[" (core.symbol-to-string register) @"]")))
-
+(interpres/define @asm/address (interpres/lambda (offset register)
+    (interpres/string/concat
+        (interpres/integer-to-string offset)
+        @"[" (interpres/symbol-to-string register) @"]")))

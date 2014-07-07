@@ -1,9 +1,9 @@
-(core.define @&& (core.lambda (a b)
-    (core.list a b @"CALL and")))
+(interpres/define @&& (interpres/lambda (a b)
+    (interpres/list a b @"CALL and")))
 
-(core.define @|| (core.lambda (a b)
-    (core.list a b @"CALL or")))
+(interpres/define @|| (interpres/lambda (a b)
+    (interpres/list a b @"CALL or")))
 
-(core.define @and &&)
-(core.define @or ||)
+(interpres/define @and &&)
+(interpres/define @or ||)
 

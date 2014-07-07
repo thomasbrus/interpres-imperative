@@ -1,9 +1,9 @@
-(core.define @&& (core.lambda (left, right)
-    (core.list left right @"iand")))
+(interpres/define @&& (interpres/lambda (left, right)
+    (interpres/list left right @"iand")))
 
-(core.define @|| (core.lambda (left, right)
-    (core.list left right @"ior")))
+(interpres/define @|| (interpres/lambda (left, right)
+    (interpres/list left right @"ior")))
 
-(core.define @and &&)
-(core.define @or ||)
+(interpres/define @and &&)
+(interpres/define @or ||)
 

@@ -1,12 +1,12 @@
-(core.define @asm.load (core.lambda (address)
-    (core.list (interpres/string/concat @"iload " address))))
+(interpres/define @asm/load (interpres/lambda (address)
+    (interpres/list (interpres/string/concat @"iload " address))))
 
-(core.define @asm.loadl (core.lambda (integer)
-    (core.list (interpres/string/concat @"sipush " (core.integer-to-string integer)))))
+(interpres/define @asm/loadl (interpres/lambda (integer)
+    (interpres/list (interpres/string/concat @"sipush " (interpres/integer-to-string integer)))))
 
-(core.define @asm.loadc (core.lambda (character)
-    (asm.loadl (interpres/character/ord character))))
+(interpres/define @asm/loadc (interpres/lambda (character)
+    (asm/loadl (interpres/character/ord character))))
 
-(core.define @asm.loads (core.lambda (string)
-    (core.list (interpres/string/concat @"ldc \"" string @"\""))))
+(interpres/define @asm/loads (interpres/lambda (string)
+    (interpres/list (interpres/string/concat @"ldc \"" string @"\""))))
 

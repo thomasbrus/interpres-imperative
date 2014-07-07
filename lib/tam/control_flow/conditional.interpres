@@ -1,8 +1,7 @@
-(core.define @if (core.lambda (predicate consequent (alternative @()))
-    (core.list
-      predicate
-      (asm.jumpif @0 (asm.address (interpres/integer/add @2 (interpres/list/size consequent)) @CP))
+(interpres/define @if (interpres/lambda (predicate consequent (alternative @()))
+    (interpres/list       predicate
+      (asm/jumpif @0 (asm/address (interpres/integer/add @2 (interpres/list/size consequent)) @CP))
       consequent
-      (asm.jump (asm.address (interpres/integer/add @1 (interpres/list/size alternative)) @CP))
+      (asm/jump (asm/address (interpres/integer/add @1 (interpres/list/size alternative)) @CP))
       alternative)))
 

@@ -1,17 +1,16 @@
-(core.define @minus (core.lambda (operand) (core.list operand @"ineg")))
+(interpres/define @minus (interpres/lambda (operand) (interpres/list operand @"ineg")))
 
-(core.define @plus (core.lambda (operand) operand))
+(interpres/define @plus (interpres/lambda (operand) operand))
 
-(core.define @! (core.lambda (operand)
-    (core.let @(true-label (asm.next-label), done-label (asm.next-label))
-      (core.list
-        operand
+(interpres/define @! (interpres/lambda (operand)
+    (interpres/let @(true-label (asm/next-label), done-label (asm/next-label))
+      (interpres/list         operand
         (interpres/string/concat @"ifeq " true-label)
         false
-        (asm.jump done-label)
-        (asm.label true-label)
+        (asm/jump done-label)
+        (asm/label true-label)
         true
-        (asm.label done-label)))))
+        (asm/label done-label)))))
 
-(core.define @not !)
+(interpres/define @not !)
 

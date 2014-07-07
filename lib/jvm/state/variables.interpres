@@ -1,7 +1,7 @@
-(core.define @var (core.lambda (@identifier (initial-value 0))
-    (core.let @(address (core.integer-to-string asm.stack.size))
-      (asm.stack.increase)
-      (core.define identifier (asm.load address))
-      (core.define (interpres/symbol/concat identifier @: @address) address)
-      (core.list initial-value (asm.store address)))))
+(interpres/define @var (interpres/lambda (@identifier (initial-value 0))
+    (interpres/let @(address (interpres/integer-to-string asm/stack/size))
+      (asm/stack/increase)
+      (interpres/define identifier (asm/load address))
+      (interpres/define (interpres/symbol/concat identifier @: @address) address)
+      (interpres/list initial-value (asm/store address)))))
 
