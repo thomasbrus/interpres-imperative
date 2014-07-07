@@ -1,11 +1,14 @@
 (interpres/define @array interpres/list)
 
+; TODO: Extract shared logic, like constructing symbols and reducing
+; an array to a list of instructions
+
 (interpres/define @array/length (interpres/lambda (@identifier)
     (interpres/list
       (interpres/string/concat
         @"LOADL "
         (interpres/integer-to-string
-          ~(interpres/symbol/concat identifier @: @size))))))
+          ~(interpres/symbol/concat identifier @: @length))))))
 
 (interpres/define @array/at (interpres/lambda (@identifier index)
     (interpres/list
@@ -20,7 +23,7 @@
         (interpres/define (interpres/symbol/concat identifier @: @address) start-address)
 
         ; Store size and allocate space
-        (interpres/define (interpres/symbol/concat identifier @: @size) (interpres/list/size input-array))
+        (interpres/define (interpres/symbol/concat identifier @: @length) (interpres/list/size input-array))
         (asm/push (interpres/list/size input-array))
 
         ; Reduce input array to a list of instructions
@@ -39,9 +42,9 @@
                 (interpres/symbol/concat
                   identifier
                   @:
-                  (interpres/string-to-symbol (interpres/integer-to-string current-index))
-                  @:
-                  @address)
+                  @address
+                  @-
+                  (interpres/string-to-symbol (interpres/integer-to-string current-index)))
                 address)
 
               ; Increase index
@@ -71,7 +74,6 @@
          index)
       (asm/storei))))
 
-; TODO: Change var-name:index:address to var-name:address-index
 (interpres/define @array/assign (interpres/lambda (@identifier input-array)
     (interpres/list/at (interpres/list/reduce
       (interpres/lambda (memo, item)
@@ -93,9 +95,9 @@
               ~(interpres/symbol/concat
                 identifier
                 @:
-                (interpres/string-to-symbol (interpres/integer-to-string current-index))
-                @:
-                @address)))))
+                @address
+                @-
+                (interpres/string-to-symbol (interpres/integer-to-string current-index)))))))
 
         ; Return updated index and instruction list
         (interpres/list new-index, new-instruction-list))
