@@ -73,19 +73,36 @@
 
 ; TODO: Change var-name:index:address to var-name:address-index
 (interpres/define @array/assign (interpres/lambda (@identifier input-array)
-    (interpres/let @(index @0)
-        (interpres/list/map
-          (interpres/lambda (entity)
-            (interpres/list
-              entity
-              (asm/store
-                (interpres/string/concat
-                  ~(interpres/symbol/concat
-                    identifier
-                    @:
-                    (interpres/string-to-symbol (interpres/integer-to-string index))
-                    @:
-                    @address)))
-              (interpres/redefine @index (interpres/integer/add index @1))))
-        input-array))))
+    (interpres/list/at (interpres/list/reduce
+      (interpres/lambda (memo, item)
+
+        ; Extract current index and instruction list from memo
+        (interpres/bind @current-index (interpres/list/at memo @0))
+        (interpres/bind @current-instruction-list (interpres/list/at memo @1))
+
+        ; Increase index
+        (interpres/bind @new-index (interpres/integer/add current-index @1))
+
+        ; Expand instruction list with instructions for this assignment
+        (interpres/bind @new-instruction-list
+          (interpres/list
+            current-instruction-list
+            item
+            (asm/store
+            (interpres/string/concat
+              ~(interpres/symbol/concat
+                identifier
+                @:
+                (interpres/string-to-symbol (interpres/integer-to-string current-index))
+                @:
+                @address)))))
+
+        ; Return updated index and instruction list
+        (interpres/list new-index, new-instruction-list))
+
+      ; Initial index & instruction list
+      (interpres/list @0 @())
+
+      ; Array to reduce
+      input-array), @1)))
 
