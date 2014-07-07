@@ -4,7 +4,7 @@
     (core.let @(true-label (asm.next-label), done-label (asm.next-label))
       (core.list
         left right
-        (core.string.concat @"if_icmplt " true-label)
+        (interpres/string/concat @"if_icmplt " true-label)
         false
         (asm.jump done-label)
         (asm.label true-label)
@@ -15,7 +15,7 @@
     (core.let @(true-label (asm.next-label), done-label (asm.next-label))
       (core.list
         left right
-        (core.string.concat @"if_icmpgt " true-label)
+        (interpres/string/concat @"if_icmpgt " true-label)
         false
         (asm.jump done-label)
         (asm.label true-label)
@@ -26,7 +26,7 @@
     (core.let @(true-label (asm.next-label), done-label (asm.next-label))
       (core.list
         left right
-        (core.string.concat @"if_icmple " true-label)
+        (interpres/string/concat @"if_icmple " true-label)
         false
         (asm.jump done-label)
         (asm.label true-label)
@@ -37,7 +37,7 @@
     (core.let @(true-label (asm.next-label), done-label (asm.next-label))
       (core.list
         left right
-        (core.string.concat @"if_icmpge " true-label)
+        (interpres/string/concat @"if_icmpge " true-label)
         false
         (asm.jump done-label)
         (asm.label true-label)
@@ -48,7 +48,7 @@
     (core.let @(true-label (asm.next-label), done-label (asm.next-label))
       (core.list
         left right
-        (core.string.concat @"if_icmpne " true-label)
+        (interpres/string/concat @"if_icmpne " true-label)
         false
         (asm.jump done-label)
         (asm.label true-label)
@@ -59,7 +59,7 @@
     (core.let @(true-label (asm.next-label), done-label (asm.next-label))
       (core.list
         left right
-        (core.string.concat @"if_icmpeq " true-label)
+        (interpres/string/concat @"if_icmpeq " true-label)
         false
         (asm.jump done-label)
         (asm.label true-label)

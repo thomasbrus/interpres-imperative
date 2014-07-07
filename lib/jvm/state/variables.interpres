@@ -2,6 +2,6 @@
     (core.let @(address (core.integer-to-string asm.stack.size))
       (asm.stack.increase)
       (core.define identifier (asm.load address))
-      (core.define (core.symbol.concat identifier @: @address) address)
+      (core.define (interpres/symbol/concat identifier @: @address) address)
       (core.list initial-value (asm.store address)))))
 

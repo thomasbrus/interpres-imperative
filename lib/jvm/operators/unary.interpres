@@ -6,7 +6,7 @@
     (core.let @(true-label (asm.next-label), done-label (asm.next-label))
       (core.list
         operand
-        (core.string.concat @"ifeq " true-label)
+        (interpres/string/concat @"ifeq " true-label)
         false
         (asm.jump done-label)
         (asm.label true-label)

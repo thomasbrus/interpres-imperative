@@ -5,7 +5,7 @@
     (core.list character @"CALL put")))
 
 (core.define @print-str (core.lambda (string)
-    (core.list string (core.repeat (core.list.size string) @"CALL put"))))
+    (core.list string (core.repeat (interpres/list/size string) @"CALL put"))))
 
 (core.define @print-newline (core.lambda () @"CALL puteol"))
 

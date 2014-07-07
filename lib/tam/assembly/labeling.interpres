@@ -3,9 +3,9 @@
 (core.define @asm.labels.counter @0)
 
 (core.define @asm.label (core.lambda (label-name)
-    (core.string.concat label-name @":")))
+    (interpres/string/concat label-name @":")))
 
 (core.define @asm.next-label (core.lambda ()
-  (core.define @asm.labels.counter (core.integer.add @1 asm.labels.counter))
-  (core.string.concat @"label" (core.integer-to-string asm.labels.counter))))
+  (core.define @asm.labels.counter (interpres/integer/add @1 asm.labels.counter))
+  (interpres/string/concat @"label" (core.integer-to-string asm.labels.counter))))
 
