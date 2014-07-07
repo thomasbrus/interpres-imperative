@@ -5,3 +5,33 @@
       (interpres/define (interpres/symbol/concat identifier @: @address) address)
       (interpres/list (asm/push @1) initial-value (asm/store address)))))
 
+; TODO: Add comments / explanation
+(interpres/define @var-array (interpres/lambda (identifier input-array)
+    (interpres/let (start-address (asm/address asm/stack/size @SB), index @0)
+      (interpres/list
+        (interpres/define identifier (asm/load start-address))
+        (interpres/define (interpres/symbol/concat identifier @: @address) start-address)
+
+        (asm/push (interpres/list/size input-array))
+
+        (interpres/list/map
+          (interpres/lambda (entity)
+            (interpres/let (address (asm/address asm/stack/size @SB))
+              (interpres/list
+                entity
+
+                (interpres/define
+                  (interpres/symbol/concat
+                    identifier @: (interpres/string-to-symbol (interpres/integer-to-string index)) @: @address)
+                  address)
+
+                (interpres/redefine @index (interpres/integer/add index @1))
+                (asm/stack/increase)
+                (asm/store address))))
+          input-array)
+
+        (interpres/define
+          (interpres/symbol/concat identifier @: @size)
+          ; TODO: Use list.size (when map is replaced with reduce)
+          (interpres/integer-to-string index))))))
+

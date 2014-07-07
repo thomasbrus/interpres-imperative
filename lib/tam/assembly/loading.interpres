@@ -6,6 +6,11 @@
       (interpres/string/concat
         @"LOADL " (interpres/integer-to-string quoted-integer)))))
 
+(interpres/define @asm/loada (interpres/lambda (address)
+    (interpres/list (interpres/string/concat @"LOADA " address))))
+
+(interpres/define @asm/loadi (interpres/lambda () @"LOADI(1)"))
+
 (interpres/define @asm/loadc (interpres/lambda (quoted-character)
     (asm/loadl (interpres/character/ord quoted-character))))
 

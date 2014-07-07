@@ -1,0 +1,12 @@
+(interpres/define @array interpres/list)
+
+(interpres/define @array-size (interpres/lambda (identifier)
+    (interpres/list (interpres/string/concat @"LOADL " ~(interpres/symbol/concat identifier @: @size)))))
+
+; TODO: Rename to array-at
+(interpres/define @nth (interpres/define (identifier index)
+    (interpres/list
+      (+ (asm/loada (interpres/string/concat ~(interpres/symbol/concat identifier @: @address)))
+         index)
+      (asm/loadi))))
+
