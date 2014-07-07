@@ -6,6 +6,6 @@
 (read-int age)
 
 (if (>= age 21)
-  (println-str @1)
+  (println-str "Acces granted!")
   (println-str "Access denied."))
 
