@@ -51,9 +51,9 @@
         (core.string.concat @"if_icmpne " true-label)
         false
         (asm.jump done-label)
-        (asm.label true-label
+        (asm.label true-label)
         true
-        (asm.label done-label))))))
+        (asm.label done-label)))))
 
 (core.define @== (core.lambda (left, right)
     (core.let @(true-label (asm.next-label), done-label (asm.next-label))
