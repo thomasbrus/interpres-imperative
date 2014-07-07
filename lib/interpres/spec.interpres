@@ -6,14 +6,14 @@
       (core.bind @context (core.lambda (context-description, @bindings, @it-calls)
         (core.let bindings
           (do
-            (print-str "  \033[37;1m")
+            (print-str "  \033[37;1mwhen ")
             (println-str context-description)
 
             (core.bind @it (core.lambda (assertion-description, @assertion)
               (do
                 (if ~assertion
-                  (print-str "    \033[32;m")
-                  (print-str "    \033[31;m"))
+                  (print-str "    \033[32;mit ")
+                  (print-str "    \033[31;mit "))
                 (println-str assertion-description))))
 
             ~it-calls))))
