@@ -1,16 +1,16 @@
 (interpres/define @array interpres/list)
 
-(interpres/define @array/length (interpres/lambda (identifier)
+(interpres/define @array/length (interpres/lambda (@identifier)
     (interpres/list (interpres/string/concat @"LOADL " ~(interpres/symbol/concat identifier @: @size)))))
 
-(interpres/define @array/at (interpres/lambda (identifier index)
+(interpres/define @array/at (interpres/lambda (@identifier index)
     (interpres/list
       (+ (asm/loada (interpres/string/concat ~(interpres/symbol/concat identifier @: @address)))
          index)
       (asm/loadi))))
 
 ; TODO: Add comments / explanation
-(interpres/define @array/var (interpres/lambda (identifier input-array)
+(interpres/define @array/var (interpres/lambda (@identifier input-array)
     (interpres/let @(start-address (asm/address asm/stack/size @SB), index @0)
       (interpres/list
         (interpres/define identifier (asm/load start-address))
@@ -39,7 +39,7 @@
           ; TODO: Use list.size (when map is replaced with reduce)
           (interpres/integer-to-string index))))))
 
-(interpres/define @array/assign-at (interpres/lambda (identifier index value)
+(interpres/define @array/assign-at (interpres/lambda (@identifier index value)
     (interpres/list
       value
       (+ (asm/loada (interpres/string/concat ~(interpres/symbol/concat identifier @: @address)))
@@ -47,7 +47,7 @@
       (asm/storei))))
 
 ; TODO: Change var-name:index:address to var-name:address-index
-(interpres/define @array/assign (interpres/lambda (identifier input-array)
+(interpres/define @array/assign (interpres/lambda (@identifier input-array)
     (interpres/let @(index @0)
         (interpres/list/map
           (interpres/lambda (entity)

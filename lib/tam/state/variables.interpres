@@ -1,0 +1,7 @@
+(interpres/define @var (interpres/lambda (@identifier (initial-value 0))
+    (interpres/let @(address (asm/address asm/stack/size @SB))
+      (asm/stack/increase)
+      (interpres/define identifier (asm/load address))
+      (interpres/define (interpres/symbol/concat identifier @: @address) address)
+      (interpres/list (asm/push @1) initial-value (asm/store address)))))
+
