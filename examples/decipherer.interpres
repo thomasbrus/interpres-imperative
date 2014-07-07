@@ -1,0 +1,18 @@
+(require "../lib/tam.interpres")
+
+; Super hard to encrypt ciphertext
+(array/var ciphertext (array 'h' 'r' 'e' 'l' 'q' 'l' 'o' 'w' ' ' 'w' 'o' 'i' 'p' 'l' 'r' 'l' 'd'))
+
+; Secret key
+(array/var key (array true false true true false true true false true true true false false false true true true))
+
+; Decrypt cipher text using the secret key
+(var index)
+
+(while (< index (array/length ciphertext))
+  ; Print character if key[index] == true
+  (do (if (array/at key index)
+        (print-chr (array/at ciphertext index)))
+
+      (assign index (+ index 1))))
+
