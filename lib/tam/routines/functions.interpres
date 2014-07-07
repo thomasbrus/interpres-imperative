@@ -4,18 +4,23 @@
 
       ; Define what happens when the function is invoked
       (interpres/define function-name
-        ~(interpres/list           @core/lambda
-           (interpres/list first-argument-name second-argument-name)
-           (interpres/list              @core/list
-             first-argument-name
-             second-argument-name
-             (interpres/list @core/quote (asm/call function-label)))))
+        ~(interpres/list
+          @interpres/lambda
+          (interpres/list first-argument-name second-argument-name)
+          (interpres/list
+            @interpres/list
+            first-argument-name
+            second-argument-name
+            (interpres/list @interpres/quote (asm/call function-label)))))
 
       ; Place the function body on the stack
-      (interpres/list         (interpres/let           (interpres/list first-argument-name @@"LOAD(1) -2[LB]"
-                     second-argument-name @@"LOAD(1) -1[LB]"
-                     @evaluated-body body)
-          (interpres/list             (asm/jump (asm/address (interpres/integer/add @2 (interpres/list/size evaluated-body)) @CP))
+      (interpres/list
+        (interpres/let
+          (interpres/list first-argument-name @@"LOAD(1) -2[LB]"
+                          second-argument-name @@"LOAD(1) -1[LB]"
+                          @evaluated-body body)
+          (interpres/list
+            (asm/jump (asm/address (interpres/integer/add @2 (interpres/list/size evaluated-body)) @CP))
             (asm/label function-label) evaluated-body))
         @"RETURN(1) 2"))))
 

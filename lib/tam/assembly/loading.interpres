@@ -2,7 +2,9 @@
     (interpres/list (interpres/string/concat @"LOAD(1) " address))))
 
 (interpres/define @asm/loadl (interpres/lambda (quoted-integer)
-    (interpres/list (interpres/string/concat         @"LOADL " (interpres/integer-to-string quoted-integer)))))
+    (interpres/list
+      (interpres/string/concat
+        @"LOADL " (interpres/integer-to-string quoted-integer)))))
 
 (interpres/define @asm/loadc (interpres/lambda (quoted-character)
     (asm/loadl (interpres/character/ord quoted-character))))

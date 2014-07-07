@@ -1,9 +1,11 @@
 (interpres/define @read-int (interpres/lambda (@variable-symbol)
-    (interpres/list       (interpres/string/concat @"LOADA " ~(interpres/symbol/concat variable-symbol @: @address))
+    (interpres/list
+      (interpres/string/concat @"LOADA " ~(interpres/symbol/concat variable-symbol @: @address))
       @"CALL getint")))
 
 (interpres/define @read-char (interpres/lambda (variable-symbol)
-    (interpres/list       (interpres/string/concat @"LOADA " ~(interpres/symbol/concat variable-symbol @: @address))
+    (interpres/list
+      (interpres/string/concat @"LOADA " ~(interpres/symbol/concat variable-symbol @: @address))
       @"CALL get"
       @"CALL geteol")))
 

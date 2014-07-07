@@ -2,5 +2,7 @@
     (interpres/list (interpres/string/concat @"JUMP " address))))
 
 (interpres/define @asm/jumpif (interpres/lambda (truth-value address)
-    (interpres/list (interpres/string/concat         @"JUMPIF(" (interpres/integer-to-string truth-value) @") " address))))
+    (interpres/list
+      (interpres/string/concat
+        @"JUMPIF(" (interpres/integer-to-string truth-value) @") " address))))
 

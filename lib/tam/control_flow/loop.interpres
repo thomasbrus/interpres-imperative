@@ -1,5 +1,6 @@
 (interpres/define @while (interpres/lambda (condition body)
-    (interpres/list       condition
+    (interpres/list
+      condition
       (asm/jumpif @0 (asm/address (interpres/integer/add @2 (interpres/list/size body)) @CP))
       body
       (asm/jump (asm/address (interpres/integer/subtract @0 (interpres/integer/add @1 (interpres/integer/add (interpres/list/size condition) (interpres/list/size body)))) @CP)))))
