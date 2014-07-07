@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# ============================================================================
+# $ ./compile-for-jvm-and-run <file>                                         #
+# ============================================================================
+
+rm -f tmp/output.j tmp/Program.class
+java interpres.App $1 > tmp/output.j
+java jasmin.Main -d tmp tmp/output.j
+java -cp tmp Program
+
