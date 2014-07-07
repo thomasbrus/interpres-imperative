@@ -4,6 +4,8 @@
 # $ ./compile-for-tam-and-run <file> <classpath of TAM.Assembler>             #
 # =============================================================================
 
+set -o errexit
+
 rm -f tmp/output.tasm tmp/output.tam
 java interpres.App $1 > tmp/output.tasm
 java -cp $2 vb.week4.TAM.Assembler tmp/output.tasm tmp/output.tam
