@@ -1,9 +1,9 @@
 (require "../lib/jvm.interpres")
 (require "../lib/interpres/spec.interpres")
 
-(require "control_flow/conditional_spec.interpres")
-(require "control_flow/loop_spec.interpres")
-(require "control_flow/sequential_spec.interpres")
+(require "control-flow/conditional_spec.interpres")
+(require "control-flow/loop_spec.interpres")
+(require "control-flow/sequential_spec.interpres")
 
 (require "literals/booleans_spec.interpres")
 
