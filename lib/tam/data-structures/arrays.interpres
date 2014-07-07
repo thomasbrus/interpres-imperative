@@ -1,12 +1,66 @@
 (interpres/define @array interpres/list)
 
-(interpres/define @array-size (interpres/lambda (identifier)
+(interpres/define @array/length (interpres/lambda (identifier)
     (interpres/list (interpres/string/concat @"LOADL " ~(interpres/symbol/concat identifier @: @size)))))
 
-; TODO: Rename to array-at
-(interpres/define @nth (interpres/lambda (identifier index)
+(interpres/define @array/at (interpres/lambda (identifier index)
     (interpres/list
       (+ (asm/loada (interpres/string/concat ~(interpres/symbol/concat identifier @: @address)))
          index)
       (asm/loadi))))
+
+; TODO: Add comments / explanation
+(interpres/define @array/var (interpres/lambda (identifier input-array)
+    (interpres/let @(start-address (asm/address asm/stack/size @SB), index @0)
+      (interpres/list
+        (interpres/define identifier (asm/load start-address))
+        (interpres/define (interpres/symbol/concat identifier @: @address) start-address)
+
+        (asm/push (interpres/list/size input-array))
+
+        (interpres/list/map
+          (interpres/lambda (entity)
+            (interpres/let @(address (asm/address asm/stack/size @SB))
+              (interpres/list
+                entity
+
+                (interpres/define
+                  (interpres/symbol/concat
+                    identifier @: (interpres/string-to-symbol (interpres/integer-to-string index)) @: @address)
+                  address)
+
+                (interpres/redefine @index (interpres/integer/add index @1))
+                (asm/stack/increase)
+                (asm/store address))))
+          input-array)
+
+        (interpres/define
+          (interpres/symbol/concat identifier @: @size)
+          ; TODO: Use list.size (when map is replaced with reduce)
+          (interpres/integer-to-string index))))))
+
+(interpres/define @array/assign-at (interpres/lambda (identifier index value)
+    (interpres/list
+      value
+      (+ (asm/loada (interpres/string/concat ~(interpres/symbol/concat identifier @: @address)))
+         index)
+      (asm/storei))))
+
+; TODO: Change var-name:index:address to var-name:address-index
+(interpres/define @array/assign (interpres/lambda (identifier input-array)
+    (interpres/let @(index @0)
+        (interpres/list/map
+          (interpres/lambda (entity)
+            (interpres/list
+              entity
+              (asm/store
+                (interpres/string/concat
+                  ~(interpres/symbol/concat
+                    identifier
+                    @:
+                    (interpres/string-to-symbol (interpres/integer-to-string index))
+                    @:
+                    @address)))
+              (interpres/redefine @index (interpres/integer/add index @1))))
+        input-array))))
 

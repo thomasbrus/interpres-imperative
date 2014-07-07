@@ -1,29 +1,3 @@
 (interpres/define @assign (interpres/lambda (@identifier value)
     (interpres/list value (asm/store ~(interpres/symbol/concat identifier @: @address)))))
 
-; TODO: Rename to assign-array-at
-(interpres/define @assign-nth (interpres/lambda (identifier index value)
-    (interpres/list
-      value
-      (+ (asm/loada (interpres/string/concat ~(interpres/symbol/concat identifier @: @address)))
-         index)
-      (asm/storei))))
-
-; TODO: Change var-name:index:address to var-name:address-index
-(interpres/define @assign-array (interpres/lambda (identifier input-array)
-    (interpres/let @(index @0)
-        (interpres/list/map
-          (interpres/lambda (entity)
-            (interpres/list
-              entity
-              (asm/store
-                (interpres/string/concat
-                  ~(interpres/symbol/concat
-                    identifier
-                    @:
-                    (interpres/string-to-symbol (interpres/integer-to-string index))
-                    @:
-                    @address)))
-              (interpres/redefine @index (interpres/integer/add index @1))))
-        input-array))))
-
