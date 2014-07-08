@@ -1,0 +1,21 @@
+(require "../lib/tam.interpres")
+
+; == functions.interpres =============================================
+;
+;  Experimental support for functions. Only TAM is supported at the
+;  moment.
+;
+;  See tam/routines/functions.interpres for implementation details.
+;
+; ====================================================================
+
+(fn simple-calculation (a b c) (* (+ a b) c))
+
+(fn say-hello (times)
+  (while (< 0 times)
+    (do (println-str "Hello!")
+        (assign times (- times 1)))))
+
+(println-int (simple-calculation 3 4 5))
+(say-hello 3)
+
