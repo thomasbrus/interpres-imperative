@@ -1,0 +1,78 @@
+; == day-of-week.interpres ============================================
+; 
+;  Will calculate what day of week it was / will be on a certain date
+;  using Zeller's congruence.
+;
+;  Zeller's congruence is an algorithm devised by Christian Zeller to 
+;  calculate the day of the week for any Gregorian calendar date.
+;
+; ====================================================================
+
+
+(require "../lib/jvm.interpres")
+
+(var year)
+(var month)
+(var day)
+
+(while (|| (<= year 0) (> year 9999)) (do
+  (print-str "Which year? (YYYY) ")
+  (read-int year)
+  (if (|| (<= year 0) (> year 9999)) 
+    (println-str ">> This year is invalid. Make sure you provide a valid year.") 
+    @())))
+
+(while (|| (<= month 0) (> month 12)) (do
+  (print-str "What month? (1-12) ")
+  (read-int month)
+  (if (|| (<= month 0) (> month 12)) 
+    (println-str ">> This month is invalid. Please provide a number between 1 and 12.") 
+    @())))
+
+(while (! (&& (> day 0) (<= day 31))) (do
+  (print-str "What day? (1-31) ")
+  (read-int day)
+  (if (! (&& (> day 0) (<= day 31))) 
+    (println-str ">> This day is invalid. Please provide a number between 1 and 31.") 
+    @())))
+
+
+; Zeller's algorithm
+(var newyear)
+(var B)
+(if (|| (== month 1) (== month 2)) 
+ (do 
+   (assign B (+ month 10)) 
+   (assign newyear (- year 1))) 
+ (do 
+   (assign B (- month 2)) 
+   (assign newyear year)))
+
+
+(var C (% newyear 100))
+(var D (/ newyear 100))
+(var W (/ (- (* 13 B) 1) 5))
+(var X (/ C 4))
+(var Y (/ D 4))
+(var Z (- (+ (+ (+ (+ W X) Y) day) C) (* 2 D)))
+(var R (% Z 7))
+(assign R (if (< R 0) (+ R 7) R))
+
+
+(print-int day)
+(print-str "/")
+(print-int month)
+(print-str "/")
+(print-int year)
+(print-str " is a ")
+
+(print-str (if (== R 0) "Sunday"
+  (if (== R 1) "Monday"
+    (if (== R 2) "Tuesday"
+      (if (== R 3) "Wednesday"
+        (if (== R 4) "Thursday"
+          (if (== R 5) "Friday"
+            (if (== R 6) "Saturday" "Unknown"))))))))
+
+
+(print-str ".")
