@@ -1,0 +1,115 @@
+(interpres/define @array interpres/list)
+
+; TODO: Extract shared logic, like constructing symbols and reducing
+; an array to a list of instructions
+
+(interpres/define @array/length (interpres/lambda (@identifier)
+    (interpres/list
+      (interpres/string/concat
+        @"sipush "
+        (interpres/integer-to-string
+          ~(interpres/symbol/concat identifier @: @length))))))
+
+(interpres/define @array/at (interpres/lambda (@identifier index)
+    (interpres/list/concat
+      (asm/aload (interpres/string/concat ~(interpres/symbol/concat identifier @: @address)))
+      index
+      @("iaload"))))
+
+
+(interpres/define @array/var (interpres/lambda (@identifier input-array)
+    (interpres/let @(start-address (interpres/integer-to-string asm/stack/size))
+      (interpres/list
+        (interpres/define identifier (asm/load start-address))
+        (interpres/define (interpres/symbol/concat identifier @: @address) start-address)
+
+        ; Store size and allocate space
+        (interpres/define (interpres/symbol/concat identifier @: @length) (interpres/list/size input-array))
+        (asm/loadl (interpres/list/size input-array))
+        @"newarray int"
+        (asm/astore start-address)
+        ; Reduce input array to a list of instructions
+        (interpres/list/at (interpres/list/reduce
+
+          ; Accumulator function
+          (interpres/lambda (memo, item)
+            (interpres/let @(address asm/stack/size)
+
+              ; Extract current index and instruction list from memo
+              (interpres/bind @current-index (interpres/list/at memo @0))
+              (interpres/bind @current-instruction-list (interpres/list/at memo @1))
+
+              ; Store address of this array item
+              (interpres/define
+                (interpres/symbol/concat
+                  identifier
+                  @:
+                  @address
+                  @-
+                  (interpres/string-to-symbol (interpres/integer-to-string current-index)))
+                address)
+
+              ; Increase index
+              (interpres/bind @new-index (interpres/integer/add current-index @1))
+
+              ; Expand instruction list with instructions for this array item
+              (interpres/bind @new-instruction-list
+                (interpres/list
+                  current-instruction-list
+                  (asm/aload start-address)
+                  (asm/loadl current-index)
+                  item
+                  (asm/stack/increase)
+                  @"iastore"))
+
+              ; Return updated index and instruction list
+              (interpres/list new-index new-instruction-list)))
+
+          ; Initial index & instruction list
+          (interpres/list @0 @())
+
+          ; The array to reduce. Fetch second argument when done
+          input-array), @1)))))
+
+(interpres/define @array/assign-at (interpres/lambda (@identifier index value)
+    (interpres/list
+      (asm/aload (interpres/string/concat ~(interpres/symbol/concat identifier @: @address)))
+      index
+      value
+      @"iastore")))
+
+(interpres/define @array/assign (interpres/lambda (@identifier input-array)
+    (interpres/list/at (interpres/list/reduce
+      (interpres/lambda (memo, item)
+
+        ; Extract current index and instruction list from memo
+        (interpres/bind @current-index (interpres/list/at memo @0))
+        (interpres/bind @current-instruction-list (interpres/list/at memo @1))
+
+        ; Increase index
+        (interpres/bind @new-index (interpres/integer/add current-index @1))
+
+        ; Expand instruction list with instructions for this assignment
+        (interpres/bind @new-instruction-list
+          (interpres/list
+            current-instruction-list
+            (asm/aload (interpres/string/concat
+              ~(interpres/symbol/concat
+                identifier
+                @:
+                @address
+                )))
+            (asm/loadl current-index)
+            item
+            @"iastore"
+            ))
+
+        ; Return updated index and instruction list
+        (interpres/list new-index, new-instruction-list))
+
+      ; Initial index & instruction list
+      (interpres/list @0 @())
+
+      ; Array to reduce
+      input-array), @1)))
+

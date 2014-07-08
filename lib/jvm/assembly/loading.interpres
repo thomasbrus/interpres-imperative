@@ -10,3 +10,6 @@
 (interpres/define @asm/loads (interpres/lambda (string)
     (interpres/list (interpres/string/concat @"ldc \"" string @"\""))))
 
+(interpres/define @asm/aload (interpres/lambda (address)
+    (interpres/list (interpres/string/concat @"aload " address))))
+

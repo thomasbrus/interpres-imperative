@@ -8,24 +8,24 @@
 ;
 ; ====================================================================
 
-(require "../lib/jvm.interpres")
 ;(require "../lib/tam.interpres")
+(require "../lib/tam.interpres")
 
 (var year)
 (var month)
 (var day)
 
-(while (|| (<= year 0) (> year 9999)) (do
+(while (|| (<= year 0) (>= year 10000)) (do
   (print-str "Which year? (YYYY) ")
   (read-int year)
-  (if (|| (<= year 0) (> year 9999))
+  (if (|| (<= year 0) (>= year 10000))
     (println-str ">> This year is invalid. Make sure you provide a valid year.")
     @())))
 
-(while (|| (<= month 0) (> month 12)) (do
+(while (|| (< month 1) (> month 12)) (do
   (print-str "What month? (1-12) ")
   (read-int month)
-  (if (|| (<= month 0) (> month 12))
+  (if (|| (< month 1) (> month 12))
     (println-str ">> This month is invalid. Please provide a number between 1 and 12.")
     @())))
 
@@ -36,6 +36,7 @@
     (println-str ">> This day is invalid. Please provide a number between 1 and 31.")
     @())))
 
+(array/var date (array day, month, year))
 
 ; Zeller's algorithm
 (var newyear)
@@ -48,9 +49,9 @@
    (assign B (- month 2))
    (assign newyear year)))
 
-
-(var C (% newyear 100))
-(var D (/ newyear 100))
+(const hundred 100)
+(var C (% newyear hundred))
+(var D (/ newyear hundred))
 (var W (/ (- (* 13 B) 1) 5))
 (var X (/ C 4))
 (var Y (/ D 4))
@@ -59,11 +60,11 @@
 (assign R (if (< R 0) (+ R 7) R))
 
 
-(print-int day)
+(print-int (array/at date 0))
 (print-str "/")
-(print-int month)
+(print-int (array/at date 1))
 (print-str "/")
-(print-int year)
+(print-int (array/at date 2))
 (print-str " is a ")
 
 (if (== R 0) (print-str "Sunday")
@@ -74,5 +75,5 @@
           (if (== R 5) (print-str "Friday")
             (if (== R 6) (print-str "Saturday") (print-str "Unknown"))))))))
 
-
 (print-str ".")
+
