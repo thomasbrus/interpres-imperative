@@ -8,8 +8,8 @@
 ;
 ; ====================================================================
 
-; (require "../lib/tam.interpres") ; Output TAM instructions
-(require "../lib/jvm.interpres") ; Output JVM instructions
+(require "../lib/tam.interpres") ; Output TAM instructions
+; (require "../lib/jvm.interpres") ; Output JVM instructions
 
 (var year)
 (var month)
@@ -36,8 +36,7 @@
         (print-str "What day? (1-31) ")
         (read-int day)))
 
-; TODO: (array/var date (day, month, year))
-(array/var date (array day, month, year))
+(array/var date (day, month, year))
 
 ; Run Zeller's algorithm
 (const days-per-week 7)

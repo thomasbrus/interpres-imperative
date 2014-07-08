@@ -5,6 +5,6 @@
 
 (describe "state/variables#array/length"
   (context "creating an array with three items"
-    (_ (array/var my-array (array 1 2 3)) my-array-length (array/length my-array))
+    (_ (array/var my-array (1 2 3)) my-array-length (array/length my-array))
     (it "has length 3" (do my-array (== my-array-length 3)))))
 

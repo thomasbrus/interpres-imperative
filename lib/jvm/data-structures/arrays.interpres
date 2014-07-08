@@ -16,8 +16,7 @@
       index
       @("iaload"))))
 
-
-(interpres/define @array/var (interpres/lambda (@identifier input-array)
+(interpres/define @array/var (interpres/lambda (@identifier @input-array)
     (interpres/let @(start-address (interpres/integer-to-string asm/stack/size))
       (interpres/list
         (interpres/define identifier (asm/load start-address))
@@ -28,6 +27,7 @@
         (asm/loadl (interpres/list/size input-array))
         @"newarray int"
         (asm/astore start-address)
+
         ; Reduce input array to a list of instructions
         (interpres/list/at (interpres/list/reduce
 
@@ -69,7 +69,7 @@
           (interpres/list @0 @())
 
           ; The array to reduce. Fetch second argument when done
-          input-array), @1)))))
+          ~(interpres/list/concat @(array) input-array)), @1)))))
 
 (interpres/define @array/assign-at (interpres/lambda (@identifier index value)
     (interpres/list
