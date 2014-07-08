@@ -8,58 +8,58 @@
 ;
 ; ====================================================================
 
-;(require "../lib/tam.interpres")
-(require "../lib/tam.interpres")
+; (require "../lib/tam.interpres") ; Output TAM instructions
+(require "../lib/jvm.interpres") ; Output JVM instructions
 
 (var year)
 (var month)
 (var day)
 
-(while (|| (<= year 0) (>= year 10000)) (do
-  (print-str "Which year? (YYYY) ")
-  (read-int year)
-  (if (|| (<= year 0) (>= year 10000))
-    (println-str ">> This year is invalid. Make sure you provide a valid year.")
-    @())))
+(while (or (<= year 0) (>= year 10000))
+  (do (unless (== year 0)
+        (println-str ">> This year is invalid. Make sure you provide a valid year."))
 
-(while (|| (< month 1) (> month 12)) (do
-  (print-str "What month? (1-12) ")
-  (read-int month)
-  (if (|| (< month 1) (> month 12))
-    (println-str ">> This month is invalid. Please provide a number between 1 and 12.")
-    @())))
+      (print-str "Which year? (YYYY) ")
+      (read-int year)))
 
-(while (! (&& (> day 0) (<= day 31))) (do
-  (print-str "What day? (1-31) ")
-  (read-int day)
-  (if (! (&& (> day 0) (<= day 31)))
-    (println-str ">> This day is invalid. Please provide a number between 1 and 31.")
-    @())))
+(while (or (< month 1) (> month 12))
+  (do (unless (== month 0)
+        (println-str ">> This month is invalid. Please provide a number between 1 and 12."))
 
+      (print-str "What month? (1-12) ")
+      (read-int month)))
+
+(until (and (> day 0) (<= day 31))
+  (do (unless (== day 0)
+        (println-str ">> This day is invalid. Please provide a number between 1 and 31."))
+
+        (print-str "What day? (1-31) ")
+        (read-int day)))
+
+; TODO: (array/var date (day, month, year))
 (array/var date (array day, month, year))
 
-; Zeller's algorithm
-(var newyear)
-(var B)
-(if (|| (== month 1) (== month 2))
- (do
-   (assign B (+ month 10))
-   (assign newyear (- year 1)))
- (do
-   (assign B (- month 2))
-   (assign newyear year)))
+; Run Zeller's algorithm
+(const days-per-week 7)
 
-(const hundred 100)
-(var C (% newyear hundred))
-(var D (/ newyear hundred))
-(var W (/ (- (* 13 B) 1) 5))
-(var X (/ C 4))
-(var Y (/ D 4))
-(var Z (- (+ (+ (+ (+ W X) Y) day) C) (* 2 D)))
-(var R (% Z 7))
-(assign R (if (< R 0) (+ R 7) R))
+(var adjusted-year year)
+(if (<= month 2) (assign adjusted-year (- year 1)))
 
+(var adjusted-month (if (or (== month 1) (== month 2))
+                      (+ month 10)
+                      (- month 2)))
 
+(var year-of-century (% adjusted-year 100))
+(var century (/ adjusted-year 100))
+
+(var x (/ (- (* 13 adjusted-month) 1) 5))
+(var y (/ year-of-century 4))
+(var z (/ century 4))
+
+(var day-of-week-offset (- (+ year-of-century (+ day (+ z (+ x y)))) (* 2 century)))
+(var day-of-week-index (% day-of-week-offset days-per-week))
+
+; Output the user supplied date
 (print-int (array/at date 0))
 (print-str "/")
 (print-int (array/at date 1))
@@ -67,13 +67,14 @@
 (print-int (array/at date 2))
 (print-str " is a ")
 
-(if (== R 0) (print-str "Sunday")
-  (if (== R 1) (print-str "Monday")
-    (if (== R 2) (print-str "Tuesday")
-      (if (== R 3) (print-str "Wednesday")
-        (if (== R 4) (print-str "Thursday")
-          (if (== R 5) (print-str "Friday")
-            (if (== R 6) (print-str "Saturday") (print-str "Unknown"))))))))
+; Output day of week
+(if (== day-of-week-index 0) (print-str "Sunday"))
+(if (== day-of-week-index 1) (print-str "Monday"))
+(if (== day-of-week-index 2) (print-str "Tuesday"))
+(if (== day-of-week-index 3) (print-str "Wednesday"))
+(if (== day-of-week-index 4) (print-str "Thursday"))
+(if (== day-of-week-index 5) (print-str "Friday"))
+(if (== day-of-week-index 6) (print-str "Saturday"))
 
-(print-str ".")
+(println-str ".")
 
