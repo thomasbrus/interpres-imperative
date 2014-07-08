@@ -1,3 +1,6 @@
 (interpres/define @asm/store (interpres/lambda (address)
     (interpres/list (interpres/string/concat @"istore " address))))
 
+(interpres/define @asm/astore (interpres/lambda (address)
+ (interpres/list (interpres/string/concat @"astore " address))))
+
