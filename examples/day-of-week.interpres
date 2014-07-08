@@ -8,8 +8,8 @@
 ;
 ; ====================================================================
 
-
 (require "../lib/jvm.interpres")
+;(require "../lib/tam.interpres")
 
 (var year)
 (var month)
@@ -66,13 +66,13 @@
 (print-int year)
 (print-str " is a ")
 
-(print-str (if (== R 0) "Sunday"
-  (if (== R 1) "Monday"
-    (if (== R 2) "Tuesday"
-      (if (== R 3) "Wednesday"
-        (if (== R 4) "Thursday"
-          (if (== R 5) "Friday"
-            (if (== R 6) "Saturday" "Unknown"))))))))
+(if (== R 0) (print-str "Sunday")
+  (if (== R 1) (print-str "Monday")
+    (if (== R 2) (print-str "Tuesday")
+      (if (== R 3) (print-str "Wednesday")
+        (if (== R 4) (print-str "Thursday")
+          (if (== R 5) (print-str "Friday")
+            (if (== R 6) (print-str "Saturday") (print-str "Unknown"))))))))
 
 
 (print-str ".")
