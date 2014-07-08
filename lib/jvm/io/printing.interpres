@@ -16,7 +16,7 @@
       string
       @("invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V"))))
 
-(interpres/define @print-newline (interpres/lambda (string) (println-str "")))
+(interpres/define @print-newline (interpres/lambda () (println-str "")))
 
 (interpres/define @println-int (interpres/lambda (integer)
     (interpres/list
