@@ -1,26 +1,69 @@
-(interpres/define @fn (interpres/lambda (@function-name, @first-argument-name, @second-argument-name, @body)
-    ; Use unique label to refer to this function
-    (interpres/let @(function-label (asm/next-label))
+(interpres/define @fn (interpres/lambda (@function-name, @formal-arguments, @body)
+    (interpres/let @(function-label (asm/next-label), end-of-function-label (asm/next-label))
 
       ; Define what happens when the function is invoked
       (interpres/define function-name
         ~(interpres/list
           @interpres/lambda
-          (interpres/list first-argument-name second-argument-name)
-          (interpres/list
-            @interpres/list
-            first-argument-name
-            second-argument-name
-            (interpres/list @interpres/quote (asm/call function-label)))))
+          formal-arguments
+          (interpres/list/concat
+            (interpres/list @interpres/list)
+            formal-arguments
+            (interpres/list (interpres/list @interpres/quote (asm/call function-label))))))
 
-      ; Place the function body on the stack
+      ; Set-up argument bindings
+      (interpres/bind
+        @argument-bindings
+        (interpres/list/at (interpres/list/reduce
+          (interpres/lambda (memo, formal-argument)
+
+            ; Extract current offset and current argument bindings from memo
+            (interpres/bind @current-offset (interpres/list/at memo @0))
+            (interpres/bind @current-argument-bindings (interpres/list/at memo @1))
+
+            ; Increase offset
+            (interpres/bind @new-offset (interpres/integer/subtract current-offset @1))
+
+            ; Setup formal-argument-name:adresss => -offset[LB]
+            ; This way actual argument can be used in combinination with (assign ... ...)
+            (interpres/define
+              (interpres/symbol/concat formal-argument @: @address)
+              (asm/address current-offset @LB))
+
+            ; Set up the binding (argument-name => "LOAD(1) -offset[LB]"
+            (interpres/bind @instruction-string
+              (interpres/list
+                @interpres/quote
+                (asm/load (asm/address current-offset @LB))))
+
+            (interpres/bind @new-argument-bindings
+              (interpres/list/concat
+                current-argument-bindings
+                (interpres/list formal-argument instruction-string)))
+
+            ; Return updated offset and argument-bindings
+            (interpres/list new-offset new-argument-bindings))
+
+          ; Reduce the reversed formal arguments list
+          (interpres/list @-1 @()), (interpres/list/reverse formal-arguments)), @1))
+
+      ; Calculate the number of items to pop from the stack when returning, minus one
+      (interpres/bind @return-size
+        (interpres/integer/subtract (interpres/list/size formal-arguments) @1))
+
+      ; Place the function body on the stack and prefix it with the label
       (interpres/list
         (interpres/let
-          (interpres/list first-argument-name @@"LOAD(1) -2[LB]"
-                          second-argument-name @@"LOAD(1) -1[LB]"
-                          @evaluated-body body)
+          (interpres/list/concat argument-bindings (interpres/list @evaluated-body body))
           (interpres/list
-            (asm/jump (asm/address (interpres/integer/add @2 (interpres/list/size evaluated-body)) @CP))
-            (asm/label function-label) evaluated-body))
-        @"RETURN(1) 2"))))
+            ; Jump over the function body
+            (asm/jump (interpres/string/concat end-of-function-label @"[CB]"))
+            ; Output the function body
+            (asm/label function-label)
+            evaluated-body
+            ; Return and pop actual arguments from the stack
+            (interpres/string/concat @"RETURN(1) " (interpres/integer-to-string return-size))
+            ; Indicate end of functio by this label
+            (asm/label end-of-function-label)))))))
+
 
