@@ -6,3 +6,6 @@
       (asm/jump (asm/address (interpres/integer/add @1 (interpres/list/size alternative)) @CP))
       alternative)))
 
+(interpres/define @unless (interpres/lambda (predicate consequent (alternative @()))
+    (if (not predicate) consequent alternative)))
+

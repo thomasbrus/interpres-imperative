@@ -5,3 +5,6 @@
       body
       (asm/jump (asm/address (interpres/integer/subtract @0 (interpres/integer/add @1 (interpres/integer/add (interpres/list/size condition) (interpres/list/size body)))) @CP)))))
 
+(interpres/define @until (interpres/lambda (condition, body)
+    (while (not condition) body)))
+

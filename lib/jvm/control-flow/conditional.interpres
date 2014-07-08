@@ -1,4 +1,4 @@
-(interpres/define @if (interpres/lambda (predicate, consequent, (alternative 0))
+(interpres/define @if (interpres/lambda (predicate, consequent, (alternative @(nop)))
     (interpres/let @(false-label (asm/next-label), done-label (asm/next-label))
       (interpres/list
         predicate
@@ -8,3 +8,7 @@
         (asm/label false-label)
         alternative
         (asm/label done-label)))))
+
+(interpres/define @unless (interpres/lambda (predicate consequent (alternative @(nop)))
+    (if (not predicate) consequent alternative)))
+

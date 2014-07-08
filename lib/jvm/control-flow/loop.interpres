@@ -7,3 +7,7 @@
         body
         (asm/jump reset-label)
         (asm/label done-label)))))
+
+(interpres/define @until (interpres/lambda (condition, body)
+    (while (not condition) body)))
+
