@@ -8,6 +8,6 @@ set -o errexit
 
 rm -f tmp/output.j tmp/Program.class
 java interpres.App $1 > tmp/output.j
-java jasmin.Main -d tmp tmp/output.j
+java jasmin.Main -d tmp tmp/output.j 1> /dev/null
 java -cp tmp Program
 
